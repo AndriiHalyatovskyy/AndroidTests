@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "cb8948a2-6ce5-4954-a947-145cd9dc31f3": {
+      "ProjectGuid": "cb8948a2-6ce5-4954-a947-145cd9dc31f3",
+      "DisplayName": "AndroidEmulatorTests",
+      "ColorIndex": 0
+    },
+    "c199144a-cd08-4f20-aebd-3981027d5fac": {
+      "ProjectGuid": "c199144a-cd08-4f20-aebd-3981027d5fac",
+      "DisplayName": "Solution Items",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 2
+}
