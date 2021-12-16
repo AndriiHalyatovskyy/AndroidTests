@@ -4,11 +4,12 @@ using ClassLibrary1.Pages;
 using ClassLibrary1.Pages.Common;
 using ClassLibrary1.Pages.Preference;
 using ClassLibrary1.Pages.Views;
+using ClassLibrary1.Wrappers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Appium.MultiTouch;
 using OpenQA.Selenium.Support.UI;
 
 namespace VirtualDevice.Pages
@@ -18,7 +19,7 @@ namespace VirtualDevice.Pages
         private const int DEFAULT_WAIT = 20;
 
         public AndroidDriver<AndroidElement> driver;
-        public TouchActions tActions;
+        public TouchAction tActions;
         public WebDriverWait Wait;
 
         private MainPage mainPage;
@@ -30,7 +31,7 @@ namespace VirtualDevice.Pages
         public Page(AndroidDriver<AndroidElement> driver)
         {
             this.driver = driver;
-            tActions = new TouchActions(this.driver);
+            tActions = new TouchAction(this.driver);
             Wait = new WebDriverWait(driver, TimeSpan.FromSeconds(DEFAULT_WAIT));
         }
 
@@ -71,7 +72,7 @@ namespace VirtualDevice.Pages
             //WaitForElementPresent(driver.FindElementByAndroidUIAutomator(element));
             //if (scroll != ScrollOptions.none)
             // ScrollToElement(element, scroll, scrollDistance, scrollToTop);
-          //  WaitForEnabled(element);
+            //  WaitForEnabled(element);
             return JustClick(element);
         }
 
@@ -231,8 +232,9 @@ namespace VirtualDevice.Pages
         /// <param name="wait">Wait for element to present</param>
         public void SingleTapOnElement(By by, bool wait = true)
         {
-            WaitForBoth(by);
-            tActions.SingleTap(driver.FindElement(by));
+            if (wait)
+                WaitForBoth(by);
+            tActions.Tap(driver.FindElement(by)).Perform();
         }
     }
 }

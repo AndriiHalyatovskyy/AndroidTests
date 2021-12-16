@@ -24,7 +24,7 @@ namespace ClassLibrary1.Pages.Views
         /// </summary>
         public void OpenExpandableList()
         {
-            page.Click(selectors.Expandablelist);
+            page.SingleTapOnElement(selectors.Expandablelist);
         }
     }
 
