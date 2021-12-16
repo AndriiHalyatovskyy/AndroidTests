@@ -8,6 +8,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace VirtualDevice.Pages
@@ -17,6 +18,7 @@ namespace VirtualDevice.Pages
         private const int DEFAULT_WAIT = 20;
 
         public AndroidDriver<AndroidElement> driver;
+        public TouchActions tActions;
         public WebDriverWait Wait;
 
         private MainPage mainPage;
@@ -28,6 +30,7 @@ namespace VirtualDevice.Pages
         public Page(AndroidDriver<AndroidElement> driver)
         {
             this.driver = driver;
+            tActions = new TouchActions(this.driver);
             Wait = new WebDriverWait(driver, TimeSpan.FromSeconds(DEFAULT_WAIT));
         }
 
@@ -63,7 +66,7 @@ namespace VirtualDevice.Pages
         /// <param name="scroll"></param>
         /// <param name="scrollDistance"></param>
         /// <param name="scrollToTop"></param>
-        public AndroidElement Click(By element, /*ScrollOptions scroll = ScrollOptions.none,*/ int scrollDistance = 50, bool scrollToTop = false)
+        public AppiumWebElement Click(By element, /*ScrollOptions scroll = ScrollOptions.none,*/ int scrollDistance = 50, bool scrollToTop = false)
         {
             //WaitForElementPresent(driver.FindElementByAndroidUIAutomator(element));
             //if (scroll != ScrollOptions.none)
@@ -109,7 +112,7 @@ namespace VirtualDevice.Pages
         /// Just clicks an element. Does not wait for it to be present and visible.
         /// </summary>
         /// <param name="element"></param>
-        public AndroidElement JustClick(By element)
+        public AppiumWebElement JustClick(By element)
         {
             var el = driver.FindElement(element);
             el.Click();
@@ -209,6 +212,27 @@ namespace VirtualDevice.Pages
         public IList<AndroidElement> GetListElements(By by)
         {
             return driver.FindElements(by);
+        }
+
+        /// <summary>
+        /// Waits for element to be present and visible
+        /// </summary>
+        /// <param name="element"></param>
+        public void WaitForBoth(By element)
+        {
+            WaitForElementPresent(element);
+            WaitForVisible(element);
+        }
+
+        /// <summary>
+        /// Single tap on element
+        /// </summary>
+        /// <param name="by">Element selector</param>
+        /// <param name="wait">Wait for element to present</param>
+        public void SingleTapOnElement(By by, bool wait = true)
+        {
+            WaitForBoth(by);
+            tActions.SingleTap(driver.FindElement(by));
         }
     }
 }

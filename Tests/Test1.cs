@@ -43,6 +43,7 @@ namespace VirtualDevice
         public void LongPressTest()
         {
             Page.MainPage.OpenPage(MainPages.Views);
+            Page.ViewsPage.OpenExpandableList();
         }
     }
 }

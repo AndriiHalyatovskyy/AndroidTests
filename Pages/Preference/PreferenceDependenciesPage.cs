@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Appium.Enums;
-using OpenQA.Selenium.Appium.Interfaces;
+﻿using OpenQA.Selenium;
 using VirtualDevice.Pages;
 
 namespace ClassLibrary1.Pages.Preference

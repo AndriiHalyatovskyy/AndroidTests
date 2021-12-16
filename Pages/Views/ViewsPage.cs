@@ -18,11 +18,20 @@ namespace ClassLibrary1.Pages.Views
         {
            return page.GetListElements(selectors.ClickableElements).Count;
         }
+
+        /// <summary>
+        /// Open Expandable List page
+        /// </summary>
+        public void OpenExpandableList()
+        {
+            page.Click(selectors.Expandablelist);
+        }
     }
 
     public class ViewsPageSelectors
     {
         public By ClickableElements = MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)");
+        public By Expandablelist = MobileBy.AndroidUIAutomator("text(\"Expandable Lists\")");
     }
 
 }
