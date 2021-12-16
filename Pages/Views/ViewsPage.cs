@@ -34,6 +34,15 @@ namespace ClassLibrary1.Pages.Views
         {
             page.SingleTapOnElement(selectors.DateWidgets);
         }
+
+        /// <summary>
+        /// Scrolls to specified element
+        /// </summary>
+        /// <param name="elementToScroll"></param>
+        public void ScrollTo(string elementToScroll)
+        {
+            page.ScrollToElement(selectors.ScrollTo(elementToScroll));
+        }
     }
 
     public class ViewsPageSelectors
@@ -41,6 +50,7 @@ namespace ClassLibrary1.Pages.Views
         public By ClickableElements = MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)");
         public By Expandablelist = MobileBy.AndroidUIAutomator("text(\"Expandable Lists\")");
         public By DateWidgets = MobileBy.AndroidUIAutomator("text(\"Date Widgets\")");
+        public By ScrollTo(string elementToScroll) => MobileBy.AndroidUIAutomator($"new UiScrollable(new UiSelector()).scrollIntoView(text(\"{elementToScroll}\"));");
     }
 
 }

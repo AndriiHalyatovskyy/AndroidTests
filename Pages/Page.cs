@@ -332,5 +332,14 @@ namespace VirtualDevice.Pages
 
             tActions.Cancel();
         }
+
+        /// <summary>
+        /// Scroll to element
+        /// </summary>
+        /// <param name="element">Element to scroll</param>
+        public void ScrollToElement(By element)
+        {
+            driver.FindElement(element);
+        }
     }
 }

@@ -61,5 +61,12 @@ namespace VirtualDevice
             Page.DateWidgetsPage.OpenInlineDateWidget();
             Page.DateWidgetsPage.SelectTimeInline(time);
         }
+
+        [Test]
+        public void ScrollingTest()
+        {
+            Page.MainPage.OpenPage(MainPages.Views);
+            Page.ViewsPage.ScrollTo("WebView");
+        }
     }
 }
