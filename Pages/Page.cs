@@ -4,7 +4,6 @@ using ClassLibrary1.Pages;
 using ClassLibrary1.Pages.Common;
 using ClassLibrary1.Pages.Preference;
 using ClassLibrary1.Pages.Views;
-using ClassLibrary1.Wrappers;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
@@ -27,6 +26,8 @@ namespace VirtualDevice.Pages
         private PreferenceDependenciesPage preferenceDependenciesPage;
         private TextPopup textPopupPage;
         private ViewsPage viewsPage;
+        private ExpandableListsPage expandableListsPage;
+        private CustomAdapterPage customAdapterPage;
 
         public Page(AndroidDriver<AndroidElement> driver)
         {
@@ -58,6 +59,16 @@ namespace VirtualDevice.Pages
         public ViewsPage ViewsPage
         {
             get { return viewsPage ?? (viewsPage = new ViewsPage(this)); }
+        }
+
+        public ExpandableListsPage ExpandableListsPage
+        {
+            get { return expandableListsPage ?? (expandableListsPage = new ExpandableListsPage(this)); }
+        }
+
+        public CustomAdapterPage CustomAdapterPage
+        {
+            get { return customAdapterPage ?? (customAdapterPage = new CustomAdapterPage(this)); }
         }
 
         /// <summary>
@@ -226,6 +237,47 @@ namespace VirtualDevice.Pages
         }
 
         /// <summary>
+        /// Checks if element is visible
+        /// </summary>
+        /// <param name="by"></param>
+        public bool IsElementVisible(By by)
+        {
+            try
+            {
+                return driver.FindElement(by).Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            catch (StaleElementReferenceException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Checks if element is present
+        /// </summary>
+        /// <param name="by"></param>
+        public bool IsElementPresent(By by)
+        {
+            try
+            {
+                driver.FindElement(by);
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            catch (NoSuchWindowException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Single tap on element
         /// </summary>
         /// <param name="by">Element selector</param>
@@ -235,6 +287,20 @@ namespace VirtualDevice.Pages
             if (wait)
                 WaitForBoth(by);
             tActions.Tap(driver.FindElement(by)).Perform();
+            tActions.Cancel();
+        }
+
+        /// <summary>
+        /// Long press on specified element
+        /// </summary>
+        /// <param name="by">Element selector</param>
+        /// <param name="wait">Wait for element to present</param>
+        public void LongPressOnElement(By by, bool wait = true)
+        {
+            if (wait)
+                WaitForBoth(by);
+            tActions.LongPress(driver.FindElement(by)).Release().Perform();
+            tActions.Cancel();
         }
     }
 }

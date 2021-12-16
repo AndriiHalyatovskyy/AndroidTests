@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using ClassLibrary1.Pages.Views;
+using NUnit.Framework;
 using VirtualDevice.Enums;
 using VirtualDevice.Pages;
 using VirtualDevice.Tests;
@@ -44,6 +45,10 @@ namespace VirtualDevice
         {
             Page.MainPage.OpenPage(MainPages.Views);
             Page.ViewsPage.OpenExpandableList();
+            Page.ExpandableListsPage.OpenCustomAdapterPage();
+            Page.CustomAdapterPage.OpenPopupFor(CustomAdapterOptions.People);
+            var isDisplayed = Page.CustomAdapterPage.IsPopupDisplayed();
+            Assert.IsTrue(isDisplayed, "Popup is not displayed");
         }
     }
 }
