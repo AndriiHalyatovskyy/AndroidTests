@@ -79,6 +79,7 @@
     <Compile Include="Pages\Preference\PreferenceDependenciesPage.cs" />
     <Compile Include="Pages\Preference\PreferencePage.cs" />
     <Compile Include="Pages\Views\CustomAdapterPage.cs" />
+    <Compile Include="Pages\Views\DateWidgetsPage.cs" />
     <Compile Include="Pages\Views\ExpandableListsPage.cs" />
     <Compile Include="Pages\Views\ViewsPage.cs" />
     <Compile Include="Tests\Test1.cs" />

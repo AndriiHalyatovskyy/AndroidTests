@@ -18,7 +18,7 @@ namespace VirtualDevice.Pages
         private const int DEFAULT_WAIT = 20;
 
         public AndroidDriver<AndroidElement> driver;
-        public TouchAction tActions;
+        private TouchAction tActions;
         public WebDriverWait Wait;
 
         private MainPage mainPage;
@@ -28,6 +28,7 @@ namespace VirtualDevice.Pages
         private ViewsPage viewsPage;
         private ExpandableListsPage expandableListsPage;
         private CustomAdapterPage customAdapterPage;
+        private DateWidgetsPage dateWidgetsPage;
 
         public Page(AndroidDriver<AndroidElement> driver)
         {
@@ -69,6 +70,10 @@ namespace VirtualDevice.Pages
         public CustomAdapterPage CustomAdapterPage
         {
             get { return customAdapterPage ?? (customAdapterPage = new CustomAdapterPage(this)); }
+        }        
+        public DateWidgetsPage DateWidgetsPage
+        {
+            get { return dateWidgetsPage ?? (dateWidgetsPage = new DateWidgetsPage(this)); }
         }
 
         /// <summary>
@@ -294,12 +299,37 @@ namespace VirtualDevice.Pages
         /// Long press on specified element
         /// </summary>
         /// <param name="by">Element selector</param>
-        /// <param name="wait">Wait for element to present</param>
-        public void LongPressOnElement(By by, bool wait = true)
+        /// <param name="waitForElement">Wait for element to present</param>
+        /// <param name="waitMs">Tap and wait in ms</param>
+        public void LongPressOnElement(By by, bool waitForElement = true, long waitMs = 2000)
         {
-            if (wait)
+            if (waitForElement)
+            {
                 WaitForBoth(by);
-            tActions.LongPress(driver.FindElement(by)).Release().Perform();
+            }
+
+            tActions.LongPress(driver.FindElement(by))
+                .Wait(waitMs)
+                .Release()
+                .Perform();
+            tActions.Cancel();
+        }
+
+        /// <summary>
+        /// Perform move action to specified element
+        /// </summary>
+        /// <param name="from">Element selector to move from</param>
+        /// <param name="to">Element selector to move</param>
+        /// <param name="waitForElement">Set to true if toy need to wait for element</param>
+        public void MoveToElement(By from, By to, bool waitForElement = true)
+        {
+            if (waitForElement)
+            {
+                WaitForBoth(from);
+                WaitForBoth(to);
+            }
+            tActions.LongPress(driver.FindElement(from)).MoveTo(driver.FindElement(to)).Release().Perform();
+
             tActions.Cancel();
         }
     }

@@ -1,4 +1,5 @@
-﻿using ClassLibrary1.Pages.Views;
+﻿using System;
+using ClassLibrary1.Pages.Views;
 using NUnit.Framework;
 using VirtualDevice.Enums;
 using VirtualDevice.Pages;
@@ -11,6 +12,7 @@ namespace VirtualDevice
     {
         #region Test data
         private string expectedWifiName;
+        private readonly TimeSpan time = new TimeSpan(8, 45, 0);
         #endregion
 
         [OneTimeSetUp]
@@ -49,6 +51,15 @@ namespace VirtualDevice
             Page.CustomAdapterPage.OpenPopupFor(CustomAdapterOptions.People);
             var isDisplayed = Page.CustomAdapterPage.IsPopupDisplayed();
             Assert.IsTrue(isDisplayed, "Popup is not displayed");
+        }
+
+        [Test]
+        public void SwipeTest()
+        {
+            Page.MainPage.OpenPage(MainPages.Views);
+            Page.ViewsPage.OpenDateWidgets();
+            Page.DateWidgetsPage.OpenInlineDateWidget();
+            Page.DateWidgetsPage.SelectTimeInline(time);
         }
     }
 }

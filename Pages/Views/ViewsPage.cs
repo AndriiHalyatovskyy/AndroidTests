@@ -26,12 +26,21 @@ namespace ClassLibrary1.Pages.Views
         {
             page.SingleTapOnElement(selectors.Expandablelist);
         }
+
+        /// <summary>
+        /// Open Expandable List page
+        /// </summary>
+        public void OpenDateWidgets()
+        {
+            page.SingleTapOnElement(selectors.DateWidgets);
+        }
     }
 
     public class ViewsPageSelectors
     {
         public By ClickableElements = MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)");
         public By Expandablelist = MobileBy.AndroidUIAutomator("text(\"Expandable Lists\")");
+        public By DateWidgets = MobileBy.AndroidUIAutomator("text(\"Date Widgets\")");
     }
 
 }
