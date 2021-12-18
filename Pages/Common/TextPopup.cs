@@ -49,7 +49,7 @@ namespace ClassLibrary1.Pages.Common
     public class TextPopupSelectors
     {
         public By TextInput = MobileBy.ClassName("android.widget.EditText");
-        public By OkButton = MobileBy.XPath("//android.widget.Button[@text = 'OK']");
+        public By OkButton = MobileBy.Id("android:id/button1");
         public By CancelButton = MobileBy.XPath("//android.widget.Button[@text = 'CANCEL']");
     }
 }

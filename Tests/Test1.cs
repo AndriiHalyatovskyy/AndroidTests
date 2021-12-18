@@ -68,5 +68,13 @@ namespace VirtualDevice
             Page.MainPage.OpenPage(MainPages.Views);
             Page.ViewsPage.ScrollTo("WebView");
         }
+
+        [Test]
+        public void DragNDropTest()
+        {
+            Page.MainPage.OpenPage(MainPages.Views);
+            Page.ViewsPage.OpenDragAndDrop();
+            Page.ViewsPage.DragNDrop();
+        }
     }
 }

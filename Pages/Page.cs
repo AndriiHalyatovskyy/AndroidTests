@@ -70,7 +70,7 @@ namespace VirtualDevice.Pages
         public CustomAdapterPage CustomAdapterPage
         {
             get { return customAdapterPage ?? (customAdapterPage = new CustomAdapterPage(this)); }
-        }        
+        }
         public DateWidgetsPage DateWidgetsPage
         {
             get { return dateWidgetsPage ?? (dateWidgetsPage = new DateWidgetsPage(this)); }
@@ -283,6 +283,29 @@ namespace VirtualDevice.Pages
         }
 
         /// <summary>
+		/// Waits for element(s) to not be visible
+		/// </summary>
+		/// <param name="elements">Element(s) to wait for</param>
+		public void WaitForNotVisible(params By[] elements)
+        {
+            foreach (var element in elements)
+            {
+                try
+                {
+                    Wait.Until(driver => !IsElementVisible(element));
+                }
+                catch (WebDriverTimeoutException e)
+                {
+                    FailIt("Timed out after " + Wait.Timeout + " seconds waiting for " + element.ToString() + " to dissappear.", e.InnerException);
+                }
+                catch (StaleElementReferenceException)
+                {
+
+                }
+            }
+        }
+
+        /// <summary>
         /// Single tap on element
         /// </summary>
         /// <param name="by">Element selector</param>
@@ -321,7 +344,29 @@ namespace VirtualDevice.Pages
         /// <param name="from">Element selector to move from</param>
         /// <param name="to">Element selector to move</param>
         /// <param name="waitForElement">Set to true if toy need to wait for element</param>
-        public void MoveToElement(By from, By to, bool waitForElement = true)
+        public void MoveToElement(By from, By to, By draggingElement = null, bool waitForElement = true)
+        {
+            if (waitForElement)
+            {
+                WaitForBoth(from);
+                WaitForBoth(to);
+            }
+            tActions.LongPress(driver.FindElement(from)).MoveTo(driver.FindElement(to)).Release().Perform();
+            if (draggingElement != null)
+            {
+                WaitForNotVisible(draggingElement);
+            }
+
+            tActions.Cancel();
+        }
+
+        /// <summary>
+        /// Perform drag n drop action to specified element
+        /// </summary>
+        /// <param name="from">Element selector to drag from</param>
+        /// <param name="to">Element selector to drop</param>
+        /// <param name="waitForElement">Set to true if toy need to wait for element</param>
+        public void DragNDrop(By from, By to, bool waitForElement = true)
         {
             if (waitForElement)
             {

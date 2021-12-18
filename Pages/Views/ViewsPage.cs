@@ -43,6 +43,22 @@ namespace ClassLibrary1.Pages.Views
         {
             page.ScrollToElement(selectors.ScrollTo(elementToScroll));
         }
+
+        /// <summary>
+        /// Open drag n drop page
+        /// </summary>
+        public void OpenDragAndDrop()
+        {
+            page.SingleTapOnElement(selectors.DragNDrop);
+        }
+
+        /// <summary>
+        /// Drag n drop element
+        /// </summary>
+        public void DragNDrop()
+        {
+            page.MoveToElement(selectors.ElementToDrag, selectors.ElementToDragTo, selectors.DraggingElement);
+        }
     }
 
     public class ViewsPageSelectors
@@ -50,6 +66,10 @@ namespace ClassLibrary1.Pages.Views
         public By ClickableElements = MobileBy.AndroidUIAutomator("new UiSelector().clickable(true)");
         public By Expandablelist = MobileBy.AndroidUIAutomator("text(\"Expandable Lists\")");
         public By DateWidgets = MobileBy.AndroidUIAutomator("text(\"Date Widgets\")");
+        public By DragNDrop = MobileBy.AndroidUIAutomator("text(\"Drag and Drop\")");
+        public By ElementToDrag = MobileBy.Id("io.appium.android.apis:id/drag_dot_1");
+        public By ElementToDragTo = MobileBy.Id("io.appium.android.apis:id/drag_dot_3");
+        public By DraggingElement = MobileBy.AndroidUIAutomator("text(\"Dragging...\")");
         public By ScrollTo(string elementToScroll) => MobileBy.AndroidUIAutomator($"new UiScrollable(new UiSelector()).scrollIntoView(text(\"{elementToScroll}\"));");
     }
 

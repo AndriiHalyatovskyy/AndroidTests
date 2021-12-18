@@ -24,11 +24,22 @@ namespace VirtualDevice.Tests
         {
             random = new Random();
             options = new AppiumOptions();
-            options.AddAdditionalCapability(MobileCapabilityType.DeviceName, BuildConfigurator.Read("DeviceName"));
-           // options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase), "APK", BuildConfigurator.Read("ApkName")));
+            if (BuildConfigurator.Read("Device").ToLower().Equals("fake"))
+            {
+                options.AddAdditionalCapability(MobileCapabilityType.DeviceName, BuildConfigurator.Read("DeviceName"));
+            }else if (BuildConfigurator.Read("Device").ToLower().Equals("real"))
+            {
+                options.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Device");
+            }
+            else
+            {
+                page.FailIt("Unknown device", new ArgumentException());
+            }
+
+            // options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase), "APK", BuildConfigurator.Read("ApkName")));
             options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", BuildConfigurator.Read("ApkName")));
             options.AddAdditionalCapability(MobileCapabilityType.AutomationName, "uiautomator2");
-            driver = new AndroidDriver<AndroidElement>(new Uri(BuildConfigurator.Read("Url")) , options);
+            driver = new AndroidDriver<AndroidElement>(new Uri(BuildConfigurator.Read("Url")), options);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
         }
 
@@ -39,6 +50,18 @@ namespace VirtualDevice.Tests
             {
                 driver.Quit();
             }
+        }
+
+        [SetUp]
+        public void SetUpTest()
+        {
+            driver.LaunchApp();   
+        }
+
+        [TearDown]
+        public void TearDownTest()
+        {
+            driver.CloseApp();
         }
 
         protected string RandomString(int length)
