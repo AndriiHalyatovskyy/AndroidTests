@@ -22,7 +22,7 @@ namespace VirtualDevice
         }
 
         [Test]
-        public void FirstTest()
+        public void WiFiTest()
         {
             Page.MainPage.OpenPage(MainPages.Preference);
             Page.PreferencePage.OpenPreferenceDependencies();

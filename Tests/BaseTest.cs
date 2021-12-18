@@ -27,7 +27,8 @@ namespace VirtualDevice.Tests
             if (BuildConfigurator.Read("Device").ToLower().Equals("fake"))
             {
                 options.AddAdditionalCapability(MobileCapabilityType.DeviceName, BuildConfigurator.Read("DeviceName"));
-            }else if (BuildConfigurator.Read("Device").ToLower().Equals("real"))
+            }
+            else if (BuildConfigurator.Read("Device").ToLower().Equals("real"))
             {
                 options.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Device");
             }
@@ -37,7 +38,7 @@ namespace VirtualDevice.Tests
             }
 
             // options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase), "APK", BuildConfigurator.Read("ApkName")));
-            options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", BuildConfigurator.Read("ApkName")));
+            options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", $"{BuildConfigurator.Read("ApkName")}.apk"));
             options.AddAdditionalCapability(MobileCapabilityType.AutomationName, "uiautomator2");
             driver = new AndroidDriver<AndroidElement>(new Uri(BuildConfigurator.Read("Url")), options);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
@@ -48,20 +49,15 @@ namespace VirtualDevice.Tests
         {
             if (driver != null)
             {
+                driver.CloseApp();
                 driver.Quit();
             }
-        }
-
-        [SetUp]
-        public void SetUpTest()
-        {
-            driver.LaunchApp();   
         }
 
         [TearDown]
         public void TearDownTest()
         {
-            driver.CloseApp();
+            driver.ResetApp();
         }
 
         protected string RandomString(int length)

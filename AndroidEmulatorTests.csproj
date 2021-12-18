@@ -74,6 +74,7 @@
     <Compile Include="Enums\MainPages.cs" />
     <Compile Include="Pages\APage.cs" />
     <Compile Include="Pages\Common\TextPopup.cs" />
+    <Compile Include="Pages\HybridAppPages\LoginPage.cs" />
     <Compile Include="Pages\MainPage.cs" />
     <Compile Include="Pages\Page.cs" />
     <Compile Include="Pages\Preference\PreferenceDependenciesPage.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Pages\Views\DateWidgetsPage.cs" />
     <Compile Include="Pages\Views\ExpandableListsPage.cs" />
     <Compile Include="Pages\Views\ViewsPage.cs" />
+    <Compile Include="Tests\HybridAppTest.cs" />
     <Compile Include="Tests\Test1.cs" />
     <Compile Include="Configuration\BuildConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +92,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="APK\ApiDemos-debug.apk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="APK\General-Store.apk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="App.config" />

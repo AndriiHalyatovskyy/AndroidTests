@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using ClassLibrary1.Pages;
 using ClassLibrary1.Pages.Common;
+using ClassLibrary1.Pages.HybridAppPages;
 using ClassLibrary1.Pages.Preference;
 using ClassLibrary1.Pages.Views;
 using NUnit.Framework;
@@ -29,6 +30,8 @@ namespace VirtualDevice.Pages
         private ExpandableListsPage expandableListsPage;
         private CustomAdapterPage customAdapterPage;
         private DateWidgetsPage dateWidgetsPage;
+
+        private LoginPage loginPage;
 
         public Page(AndroidDriver<AndroidElement> driver)
         {
@@ -74,6 +77,10 @@ namespace VirtualDevice.Pages
         public DateWidgetsPage DateWidgetsPage
         {
             get { return dateWidgetsPage ?? (dateWidgetsPage = new DateWidgetsPage(this)); }
+        }
+        public LoginPage LoginPage
+        {
+            get { return loginPage ?? (loginPage = new LoginPage(this)); }
         }
 
         /// <summary>
@@ -160,6 +167,14 @@ namespace VirtualDevice.Pages
                 Clear(element);
             }
             driver.FindElement(element).SendKeys(text);
+        }
+
+        /// <summary>
+        /// Hides the keyboard
+        /// </summary>
+        public void HideKeyboard()
+        {
+            driver.HideKeyboard();
         }
 
         /// <summary>
