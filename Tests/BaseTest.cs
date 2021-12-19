@@ -34,7 +34,7 @@ namespace VirtualDevice.Tests
             }
             else
             {
-                page.FailIt("Unknown device", new ArgumentException());
+                page.FailIt("Unknown device", new ArgumentException("Unknown device"));
             }
 
             // options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase), "APK", BuildConfigurator.Read("ApkName")));

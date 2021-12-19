@@ -74,7 +74,9 @@
     <Compile Include="Common\CommonSelectors.cs" />
     <Compile Include="Enums\MainPages.cs" />
     <Compile Include="Pages\APage.cs" />
+    <Compile Include="Pages\Common\RegexHelper.cs" />
     <Compile Include="Pages\Common\TextPopup.cs" />
+    <Compile Include="Pages\HybridAppPages\CartPage.cs" />
     <Compile Include="Pages\HybridAppPages\LoginPage.cs" />
     <Compile Include="Pages\HybridAppPages\ShopPage.cs" />
     <Compile Include="Pages\MainPage.cs" />

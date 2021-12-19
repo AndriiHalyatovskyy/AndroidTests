@@ -33,6 +33,7 @@ namespace VirtualDevice.Pages
 
         private LoginPage loginPage;
         private ShopPage shopPage;
+        private CartPage cartPage;
 
         public Page(AndroidDriver<AndroidElement> driver)
         {
@@ -86,6 +87,11 @@ namespace VirtualDevice.Pages
         public ShopPage ShopPage
         {
             get { return shopPage ?? (shopPage = new ShopPage(this)); }
+        }
+
+        public CartPage CartPage
+        {
+            get { return cartPage ?? (cartPage = new CartPage(this)); }
         }
 
         /// <summary>

@@ -21,13 +21,17 @@ namespace ClassLibrary1.Tests
             name = RandomString(15);
         }
 
-        [Test] 
+        [Test]
         public void ShopTest()
         {
             Page.LoginPage.FillLoginPage(country, name, gender);
             Page.LoginPage.ClickLetShopButton();
             Page.ShopPage.AddProductsToCart(productName, secondProductName);
             Page.ShopPage.ClickOnCartButton();
+            var firstProductPrice = Page.CartPage.GetProductPrice(productName);
+            var secondProductPrice = Page.CartPage.GetProductPrice(secondProductName);
+            var totalAmount = Page.CartPage.GetTotalAmount();
+            Assert.IsTrue(totalAmount == firstProductPrice + secondProductPrice, "Total amount is incorrect");
         }
 
         [Test]
