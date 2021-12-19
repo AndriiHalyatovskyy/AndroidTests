@@ -9,6 +9,9 @@ namespace ClassLibrary1.Tests
         #region Test Data
         private readonly string country = "Chad";
         private readonly string gender = "Male";
+        private readonly string expectedToastMessageText = "Please enter your name";
+        private readonly string productName = "Converse All Star";
+        private readonly string secondProductName = "Air Jordan 4 Retro";
         private string name;
         #endregion
 
@@ -19,10 +22,20 @@ namespace ClassLibrary1.Tests
         }
 
         [Test] 
-        public void LoginPageTest()
+        public void ShopTest()
         {
             Page.LoginPage.FillLoginPage(country, name, gender);
             Page.LoginPage.ClickLetShopButton();
+            Page.ShopPage.AddProductsToCart(productName, secondProductName);
+            Page.ShopPage.ClickOnCartButton();
+        }
+
+        [Test]
+        public void ToastMessageTest()
+        {
+            Page.LoginPage.ClickLetShopButton();
+            var actualToastMessageText = Page.LoginPage.GetTextfromToastMessage();
+            Assert.AreEqual(expectedToastMessageText, actualToastMessageText);
         }
     }
 }

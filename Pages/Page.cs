@@ -32,6 +32,7 @@ namespace VirtualDevice.Pages
         private DateWidgetsPage dateWidgetsPage;
 
         private LoginPage loginPage;
+        private ShopPage shopPage;
 
         public Page(AndroidDriver<AndroidElement> driver)
         {
@@ -81,6 +82,10 @@ namespace VirtualDevice.Pages
         public LoginPage LoginPage
         {
             get { return loginPage ?? (loginPage = new LoginPage(this)); }
+        }
+        public ShopPage ShopPage
+        {
+            get { return shopPage ?? (shopPage = new ShopPage(this)); }
         }
 
         /// <summary>

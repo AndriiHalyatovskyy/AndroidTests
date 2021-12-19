@@ -69,6 +69,11 @@ namespace ClassLibrary1.Pages.HybridAppPages
         {
             page.SingleTapOnElement(selectors.goButton);
         }
+
+        public string GetTextfromToastMessage()
+        {
+            return page.GetAttributeValue(selectors.toastMessage, "name", false);
+        }
     }
 
     public class LoginPageSelectors
@@ -76,9 +81,11 @@ namespace ClassLibrary1.Pages.HybridAppPages
         public By usernameInput = By.Id("com.androidsample.generalstore:id/nameField");
         public By goButton = By.Id("com.androidsample.generalstore:id/btnLetsShop");
         public By countryDropdown = By.Id("com.androidsample.generalstore:id/spinnerCountry");
+        public By toastMessage = By.XPath("//android.widget.Toast[1]");
 
         public By Country(string country) => MobileBy.AndroidUIAutomator($"text(\"{country}\")");
         public By GetGender(string gender) => MobileBy.AndroidUIAutomator($"text(\"{gender}\")");
         public By ScrollToCountry(string countryToScroll) => MobileBy.AndroidUIAutomator($"new UiScrollable(new UiSelector()).scrollIntoView(text(\"{countryToScroll}\"));");
+        public By ScrollToCountry2(string countryToScroll) => MobileBy.AndroidUIAutomator($"new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().textMatches(\"{countryToScroll}\").instance(0))");
     }
 }
