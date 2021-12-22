@@ -22,7 +22,7 @@ namespace VirtualDevice.Tests
                 driver: driver));
 
         [OneTimeSetUp]
-        public void OneTimeSetUpTest()
+        public void OneTimeSetUp()
         {
             random = new Random();
             options = new AppiumOptions();
@@ -39,18 +39,18 @@ namespace VirtualDevice.Tests
             {
                 page.FailIt("Unknown device", new ArgumentException("Unknown device"));
             }
-           // co.AddAdditionalCapability("w3c", "false");
+
+
             options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", $"{BuildConfigurator.Read("ApkName")}.apk"));
             options.AddAdditionalCapability(MobileCapabilityType.AutomationName, "uiautomator2");
             options.AddAdditionalCapability("chromedriverExecutable", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "chromedriver.exe"));
-           // options.AddAdditionalCapability(AndroidMobileCapabilityType.ChromeOptions, co);
 
             driver = new AndroidDriver<AndroidElement>(new Uri(BuildConfigurator.Read("Url")), options);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
         }
 
         [OneTimeTearDown]
-        public void OneTimeTearDownTest()
+        public void OneTimeTearDown()
         {
             if (driver != null)
             {
@@ -60,7 +60,7 @@ namespace VirtualDevice.Tests
         }
 
         [TearDown]
-        public void TearDownTest()
+        public void TearDown()
         {
             driver.ResetApp();
         }

@@ -71,11 +71,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChromeTest\BaseTest.cs" />
+    <Compile Include="ChromeTest\FirstTest.cs" />
     <Compile Include="Common\CommonSelectors.cs" />
     <Compile Include="Enums\MainPages.cs" />
     <Compile Include="Pages\APage.cs" />
     <Compile Include="Pages\Common\RegexHelper.cs" />
     <Compile Include="Pages\Common\TextPopup.cs" />
+    <Compile Include="Pages\GooglePages\GooglePage.cs" />
     <Compile Include="Pages\HybridAppPages\CartPage.cs" />
     <Compile Include="Pages\HybridAppPages\LoginPage.cs" />
     <Compile Include="Pages\HybridAppPages\ShopPage.cs" />
@@ -88,11 +91,11 @@
     <Compile Include="Pages\Views\DateWidgetsPage.cs" />
     <Compile Include="Pages\Views\ExpandableListsPage.cs" />
     <Compile Include="Pages\Views\ViewsPage.cs" />
-    <Compile Include="Tests\HybridAppTest.cs" />
-    <Compile Include="Tests\Test1.cs" />
+    <Compile Include="AppTests\HybridAppTest.cs" />
+    <Compile Include="AppTests\Test1.cs" />
     <Compile Include="Configuration\BuildConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\BaseTest.cs" />
+    <Compile Include="AppTests\BaseTest.cs" />
     <Compile Include="Utils\EnumDescription.cs" />
   </ItemGroup>
   <ItemGroup>

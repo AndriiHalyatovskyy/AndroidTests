@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ClassLibrary1.Pages;
 using ClassLibrary1.Pages.Common;
+using ClassLibrary1.Pages.GooglePages;
 using ClassLibrary1.Pages.HybridAppPages;
 using ClassLibrary1.Pages.Preference;
 using ClassLibrary1.Pages.Views;
@@ -38,6 +39,8 @@ namespace VirtualDevice.Pages
         private ShopPage shopPage;
         private CartPage cartPage;
         private WebViewPage webViewPage;
+
+        private GooglePage googlePage;
 
         public Page(AndroidDriver<AndroidElement> driver)
         {
@@ -103,6 +106,11 @@ namespace VirtualDevice.Pages
             get { return webViewPage ?? (webViewPage = new WebViewPage(this)); }
         }
 
+        public GooglePage GooglePage
+        {
+            get { return googlePage ?? (googlePage = new GooglePage(this)); }
+        }
+
         /// <summary>
         /// Waits for element to be present and visible and then clicks it
         /// </summary>
@@ -110,13 +118,47 @@ namespace VirtualDevice.Pages
         /// <param name="scroll"></param>
         /// <param name="scrollDistance"></param>
         /// <param name="scrollToTop"></param>
-        public AppiumWebElement Click(By element, /*ScrollOptions scroll = ScrollOptions.none,*/ int scrollDistance = 50, bool scrollToTop = false)
+        public AppiumWebElement Click(By element, ScrollOptions scroll = ScrollOptions.none, int scrollDistance = 50, bool scrollToTop = false)
         {
-            //WaitForElementPresent(driver.FindElementByAndroidUIAutomator(element));
-            //if (scroll != ScrollOptions.none)
-            // ScrollToElement(element, scroll, scrollDistance, scrollToTop);
-            //  WaitForEnabled(element);
+            WaitForElementPresent(element);
+            if (scroll != ScrollOptions.none)
+                ScrollToElement(element, scroll, scrollDistance, scrollToTop);
+            WaitForEnabled(element);
             return JustClick(element);
+        }
+
+        /// <summary>
+		/// Attempts to use javascript to scroll to a particular element
+		/// </summary>
+		/// <param name="element">By element</param>
+		/// <param name="scrollOption">Scroll option</param>
+		/// <param name="amountToScrollPast">Scroll past the element by 30 pixels in the indicated direction (to avoid floating elements)</param>
+		/// <param name="scrollToTop">true = scroll to top, false (default) = scroll to bottom</param>
+		public void ScrollToElement(By element, ScrollOptions scrollOption = ScrollOptions.none, int amountToScrollPast = 30, bool scrollToTop = false)
+        {
+            try
+            {
+                WaitForElementPresent(element);
+            }
+            catch { }
+            if (scrollOption == ScrollOptions.none)
+            {
+                ((IJavaScriptExecutor)driver).ExecuteScript("window.scrollTo(0," + (driver.FindElement(element).Location.Y) + ");");
+            }
+            else if (scrollOption == ScrollOptions.up)
+            {
+                ((IJavaScriptExecutor)driver).ExecuteScript("window.scrollTo(0," + (driver.FindElement(element).Location.Y - amountToScrollPast) + ");");
+            }
+            else if (scrollOption == ScrollOptions.down)
+            {
+                ((IJavaScriptExecutor)driver).ExecuteScript("window.scrollTo(0," + (driver.FindElement(element).Location.Y + amountToScrollPast) + ");");
+            }
+            else if (scrollOption == ScrollOptions.intoView)
+            {
+                IWebElement el;
+                el = driver.FindElement(element);
+                ((IJavaScriptExecutor)driver).ExecuteScript($"arguments[0].scrollIntoView({scrollToTop.ToString().ToLower()});", el);
+            }
         }
 
         /// <summary>
@@ -138,7 +180,7 @@ namespace VirtualDevice.Pages
         /// Waits for the element to be enabled and clickable
         /// </summary>
         /// <param name="elements"></param>
-        public void WaitForEnabled(params MobileBy[] elements)
+        public void WaitForEnabled(params By[] elements)
         {
             foreach (var element in elements)
             {
@@ -467,5 +509,22 @@ namespace VirtualDevice.Pages
         {
             driver.FindElement(element).SendKeys(key);
         }
+
+        /// <summary>
+        /// Opens the specified URL
+        /// </summary>
+        /// <param name="url"></param>
+        public void OpenURL(string url)
+        {
+            driver.Navigate().GoToUrl(url);
+        }
+    }
+
+    public enum ScrollOptions
+    {
+        none,
+        up,
+        down,
+        intoView
     }
 }
