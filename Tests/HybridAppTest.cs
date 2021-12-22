@@ -7,7 +7,7 @@ namespace ClassLibrary1.Tests
     public class HybridAppTest : BaseTest
     {
         #region Test Data
-        private readonly string country = "Chad";
+        private readonly string country = "Austria";
         private readonly string gender = "Male";
         private readonly string expectedToastMessageText = "Please enter your name";
         private readonly string productName = "Converse All Star";
@@ -40,6 +40,20 @@ namespace ClassLibrary1.Tests
             Page.LoginPage.ClickLetShopButton();
             var actualToastMessageText = Page.LoginPage.GetTextfromToastMessage();
             Assert.AreEqual(expectedToastMessageText, actualToastMessageText);
+        }
+
+        [Test]
+        public void PurchaseTest()
+        {
+            Page.LoginPage.FillLoginPage(country, name, gender);
+            Page.LoginPage.ClickLetShopButton();
+            Page.ShopPage.AddProductsToCart(secondProductName);
+            Page.ShopPage.ClickOnCartButton();
+            Page.CartPage.OpenTermsOfUse();
+            Page.CartPage.ClosePopup();
+            Page.CartPage.ClickPurchase();
+            Page.SwitchToWebView();
+            Page.WebViewPage.DoSearch("Hello World!");
         }
     }
 }

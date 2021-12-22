@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using ClassLibrary1.Pages;
 using ClassLibrary1.Pages.Common;
 using ClassLibrary1.Pages.HybridAppPages;
@@ -34,6 +37,7 @@ namespace VirtualDevice.Pages
         private LoginPage loginPage;
         private ShopPage shopPage;
         private CartPage cartPage;
+        private WebViewPage webViewPage;
 
         public Page(AndroidDriver<AndroidElement> driver)
         {
@@ -92,6 +96,11 @@ namespace VirtualDevice.Pages
         public CartPage CartPage
         {
             get { return cartPage ?? (cartPage = new CartPage(this)); }
+        }
+
+        public WebViewPage WebViewPage
+        {
+            get { return webViewPage ?? (webViewPage = new WebViewPage(this)); }
         }
 
         /// <summary>
@@ -411,6 +420,52 @@ namespace VirtualDevice.Pages
         public void ScrollToElement(By element)
         {
             driver.FindElement(element);
+        }
+
+        /// <summary>
+        /// Blocks while condition is true or timeout occurs.
+        /// </summary>
+        /// <param name="condition">The condition that will perpetuate the block.</param>
+        /// <param name="frequency">The frequency at which the condition will be check, in milliseconds.</param>
+        /// <param name="timeout">Timeout in milliseconds.</param>
+        public void WaitWhile(Func<bool> condition, int frequency = 25, int timeout = 10000)
+        {
+            var start = (DateTime.Now - DateTime.MinValue).TotalMilliseconds;
+            while (!condition())
+            {
+                Thread.Sleep(frequency);
+                if ((DateTime.Now - DateTime.MinValue).TotalMilliseconds - start > timeout)
+                {
+                    throw new TimeoutException();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Switches to web view
+        /// </summary>
+        public void SwitchToWebView()
+        {
+            WaitWhile(() => driver.Contexts.Count > 1, 500, 20000);
+            driver.Context = driver.Contexts.Where(x => x.ToString().Contains("WEBV")).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Switches to native app
+        /// </summary>
+        public void SwitchToNativeApp()
+        {
+            driver.Context = "NATIVE_APP";
+        }
+
+        /// <summary>
+        /// Send keys to element
+        /// </summary>
+        /// <param name="element">Element</param>
+        /// <param name="key">Key</param>
+        public void SendKeys(By element, string key)
+        {
+            driver.FindElement(element).SendKeys(key);
         }
     }
 }
