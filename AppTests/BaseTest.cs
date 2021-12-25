@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
@@ -62,6 +64,7 @@ namespace VirtualDevice.Tests
         [TearDown]
         public void TearDown()
         {
+            TakeScreenShot();
             driver.ResetApp();
         }
 
@@ -70,6 +73,25 @@ namespace VirtualDevice.Tests
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        /// <summary>
+        /// Make a screenshot on test failure
+        /// </summary>
+        private void TakeScreenShot()
+        {
+            var directory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent;
+            var folder = Path.Combine(directory.FullName, "ScreenShots");
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            if (TestContext.CurrentContext.Result.Outcome != ResultState.Success)
+            {
+                var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                screenshot.SaveAsFile(Path.Combine(folder, $"{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("dd.MM.yyyy")}.png"), ScreenshotImageFormat.Png);
+            }
         }
     }
 }

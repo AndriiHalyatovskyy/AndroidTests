@@ -34,6 +34,7 @@ x64/
 *.tli
 *.tlh
 *.tmp
+*.png
 *.tmp_proj
 *.log
 *.vspscc

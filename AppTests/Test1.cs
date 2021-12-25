@@ -40,6 +40,7 @@ namespace VirtualDevice
         {
             Page.MainPage.OpenPage(MainPages.Views);
             var clickableElements = Page.ViewsPage.GetCountOfClickableElements();
+            Assert.True(false);
         }
 
         [Test]

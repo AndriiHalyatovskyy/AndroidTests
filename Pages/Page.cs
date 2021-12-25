@@ -120,10 +120,10 @@ namespace VirtualDevice.Pages
         /// <param name="scrollToTop"></param>
         public AppiumWebElement Click(By element, ScrollOptions scroll = ScrollOptions.none, int scrollDistance = 50, bool scrollToTop = false)
         {
-            WaitForElementPresent(element);
+            //WaitForElementPresent(element);
             if (scroll != ScrollOptions.none)
                 ScrollToElement(element, scroll, scrollDistance, scrollToTop);
-            WaitForEnabled(element);
+           // WaitForEnabled(element);
             return JustClick(element);
         }
 

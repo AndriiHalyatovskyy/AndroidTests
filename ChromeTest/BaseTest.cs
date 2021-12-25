@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
@@ -41,6 +43,31 @@ namespace ClassLibrary1.ChromeTest
 
             driver = new AndroidDriver<AndroidElement>(new Uri(BuildConfigurator.Read("Url")), options);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            TakeScreenShot();
+        }
+
+        /// <summary>
+        /// Make a screenshot on test failure
+        /// </summary>
+        private void TakeScreenShot()
+        {
+            var directory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent;
+            var folder = Path.Combine(directory.FullName, "ScreenShots");
+            if (!Directory.Exists(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            if (TestContext.CurrentContext.Result.Outcome != ResultState.Success)
+            {
+                var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
+                screenshot.SaveAsFile(Path.Combine(folder, $"{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("dd.MM.yyyy")}.png"), ScreenshotImageFormat.Png);
+            }
         }
     }
 }
