@@ -73,7 +73,7 @@
   <ItemGroup>
     <Compile Include="AppTests\BaseTest.cs" />
     <Compile Include="ChromeTest\BaseTestChrome.cs" />
-    <Compile Include="ChromeTest\FirstTest.cs" />
+    <Compile Include="ChromeTest\ChromeAppTest.cs" />
     <Compile Include="Common\CommonSelectors.cs" />
     <Compile Include="Enums\MainPages.cs" />
     <Compile Include="Pages\APage.cs" />
@@ -102,9 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="APK\ApiDemos-debug.apk">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="APK\Chrome.apk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="APK\General-Store.apk">
