@@ -10,7 +10,8 @@ using OpenQA.Selenium.Appium.Enums;
 using VirtualDevice.Configuration;
 using VirtualDevice.Pages;
 
-namespace ClassLibrary1.ChromeTest
+namespace VirtualDevice
+
 {
     public class BaseTestChrome : AppiumUtils
     {
