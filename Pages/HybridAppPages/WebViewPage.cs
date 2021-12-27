@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Appium;
 using VirtualDevice.Pages;
 
 namespace ClassLibrary1.Pages.HybridAppPages
@@ -23,8 +22,6 @@ namespace ClassLibrary1.Pages.HybridAppPages
 
     public class WebViewPageSelectors
     {
-        public By SearchInput = By.XPath("//input[@name = 'q']");
-        //public By SearchInput = By.Name("q");
-        public By SearchButton = MobileBy.AndroidUIAutomator("text(\"Пошук Google\")");
+        public By SearchInput = By.XPath("//*[@name = 'q']");
     }
 }

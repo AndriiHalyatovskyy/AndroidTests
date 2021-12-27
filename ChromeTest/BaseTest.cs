@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using ClassLibrary1.Utils;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
@@ -11,7 +12,7 @@ using VirtualDevice.Pages;
 
 namespace ClassLibrary1.ChromeTest
 {
-    public class BaseTest
+    public class BaseTestChrome : AppiumUtils
     {
         private AndroidDriver<AndroidElement> driver;
         private AppiumOptions options;
@@ -23,26 +24,22 @@ namespace ClassLibrary1.ChromeTest
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            StartServer();
             options = new AppiumOptions();
 
-            if (BuildConfigurator.Read("Device").ToLower().Equals("fake"))
-            {
-                options.AddAdditionalCapability(MobileCapabilityType.DeviceName, BuildConfigurator.Read("DeviceName"));
-            }
-            else if (BuildConfigurator.Read("Device").ToLower().Equals("real"))
-            {
-                options.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Device");
-            }
-            else
-            {
-                page.FailIt("Unknown device", new ArgumentException("Unknown device"));
-            }
-
+            ConfigureDevice(options);
             options.AddAdditionalCapability("chromedriverExecutable", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "chromedriver.exe"));
+            options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", $"{BuildConfigurator.Read("Chrome")}.apk"));
             options.AddAdditionalCapability(MobileCapabilityType.BrowserName, "Chrome");
 
             driver = new AndroidDriver<AndroidElement>(new Uri(BuildConfigurator.Read("Url")), options);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+        }
+
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            StopServer();
         }
 
         [TearDown]

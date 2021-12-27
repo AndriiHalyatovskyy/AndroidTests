@@ -13,7 +13,7 @@ using VirtualDevice.Pages;
 
 namespace VirtualDevice.Tests
 {
-    public abstract class BaseTest : AppiumUtils
+    public abstract class DemoBaseTest : AppiumUtils
     {
         private AppiumOptions options;
         private AndroidDriver<AndroidElement> driver;
@@ -30,7 +30,7 @@ namespace VirtualDevice.Tests
             options = new AppiumOptions();
 
             ConfigureDevice(options);
-            options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", $"{BuildConfigurator.Read("ApkName")}.apk"));
+            options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", $"{BuildConfigurator.Read("DemoApkName")}.apk"));
             options.AddAdditionalCapability(MobileCapabilityType.AutomationName, "uiautomator2");
             options.AddAdditionalCapability("chromedriverExecutable", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "chromedriver.exe"));
 

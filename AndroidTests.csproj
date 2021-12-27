@@ -71,7 +71,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChromeTest\BaseTest.cs" />
+    <Compile Include="AppTests\BaseTest.cs" />
+    <Compile Include="ChromeTest\BaseTestChrome.cs" />
     <Compile Include="ChromeTest\FirstTest.cs" />
     <Compile Include="Common\CommonSelectors.cs" />
     <Compile Include="Enums\MainPages.cs" />
@@ -92,14 +93,18 @@
     <Compile Include="Pages\Views\ExpandableListsPage.cs" />
     <Compile Include="Pages\Views\ViewsPage.cs" />
     <Compile Include="AppTests\HybridAppTest.cs" />
-    <Compile Include="AppTests\Test1.cs" />
+    <Compile Include="AppTests\DemoAppTest.cs" />
     <Compile Include="Configuration\BuildConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AppTests\BaseTest.cs" />
+    <Compile Include="AppTests\DemoBaseTest.cs" />
+    <Compile Include="Utils\AppiumUtils.cs" />
     <Compile Include="Utils\EnumDescription.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="APK\ApiDemos-debug.apk">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="APK\Chrome.apk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="APK\General-Store.apk">
@@ -116,7 +121,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\NUnit.3.13.2\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NUnit.3.13.2\build\NUnit.props'))" />
     <Error Condition="!Exists('packages\NUnit3TestAdapter.4.1.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NUnit3TestAdapter.4.1.0\build\net35\NUnit3TestAdapter.props'))" />
-    <Error Condition="!Exists('packages\Selenium.WebDriver.ChromeDriver.96.0.4664.4500\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Selenium.WebDriver.ChromeDriver.96.0.4664.4500\build\Selenium.WebDriver.ChromeDriver.targets'))" />
+    <Error Condition="!Exists('packages\Selenium.WebDriver.ChromeDriver.83.0.4103.3915\build\Selenium.WebDriver.ChromeDriver.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Selenium.WebDriver.ChromeDriver.83.0.4103.3915\build\Selenium.WebDriver.ChromeDriver.targets'))" />
   </Target>
-  <Import Project="packages\Selenium.WebDriver.ChromeDriver.96.0.4664.4500\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('packages\Selenium.WebDriver.ChromeDriver.96.0.4664.4500\build\Selenium.WebDriver.ChromeDriver.targets')" />
+  <Import Project="packages\Selenium.WebDriver.ChromeDriver.83.0.4103.3915\build\Selenium.WebDriver.ChromeDriver.targets" Condition="Exists('packages\Selenium.WebDriver.ChromeDriver.83.0.4103.3915\build\Selenium.WebDriver.ChromeDriver.targets')" />
 </Project>
