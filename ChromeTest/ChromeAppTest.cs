@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace ClassLibrary1.ChromeTest
+namespace VirtualDevice
 {
     [TestFixture]
     public class ChromeAppTest : BaseTestChrome

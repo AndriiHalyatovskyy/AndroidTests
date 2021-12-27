@@ -8,7 +8,7 @@ using VirtualDevice.Tests;
 namespace VirtualDevice
 {
     [TestFixture]
-    public class Test1 : DemoBaseTest
+    public class DemoAppTests : DemoBaseTest
     {
         #region Test data
         private string expectedWifiName;
@@ -40,7 +40,7 @@ namespace VirtualDevice
         {
             Page.MainPage.OpenPage(MainPages.Views);
             var clickableElements = Page.ViewsPage.GetCountOfClickableElements();
-            Assert.True(false);
+            Assert.True(false, "Because i can");
         }
 
         [Test]

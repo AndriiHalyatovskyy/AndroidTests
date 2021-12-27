@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using VirtualDevice.Tests;
 
-namespace ClassLibrary1.Tests
+namespace VirtualDevice
 {
     [TestFixture]
     public class HybridAppTest : BaseTest
