@@ -39,6 +39,7 @@ namespace ClassLibrary1.ChromeTest
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            driver.CloseApp();
             StopServer();
         }
 

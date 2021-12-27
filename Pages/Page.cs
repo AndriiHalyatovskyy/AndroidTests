@@ -487,7 +487,7 @@ namespace VirtualDevice.Pages
         /// </summary>
         public void SwitchToWebView()
         {
-            WaitWhile(() => driver.Contexts.Count > 2, 2000, 20000);
+            WaitWhile(() => driver.Contexts.Where(x => x.ToString().ToLower().Contains("general")).FirstOrDefault() != null, 2000, 20000);
             driver.Context = driver.Contexts.Where(x => x.ToString().ToLower().Contains("general")).First();
         }
 

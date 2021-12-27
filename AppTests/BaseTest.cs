@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using ClassLibrary1.Utils;
@@ -35,6 +36,8 @@ namespace VirtualDevice.Tests
             options.AddAdditionalCapability("chromedriverExecutable", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "chromedriver.exe"));
 
             driver = new AndroidDriver<AndroidElement>(new Uri(BuildConfigurator.Read("Url")), options);
+            //var cmdstr = $"adb -s {BuildConfigurator.Read("DeviceName").Replace(" ", "_")} emu kill";
+            //Process.Start("CMD.exe", cmdstr);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
         }
 
@@ -44,6 +47,7 @@ namespace VirtualDevice.Tests
             StopServer();
             if (driver != null)
             {
+                driver.CloseApp();
                 driver.Quit();
             }
         }

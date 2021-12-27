@@ -8,7 +8,7 @@ using VirtualDevice.Tests;
 namespace VirtualDevice
 {
     [TestFixture]
-    public class Test1 : BaseTest
+    public class Test1 : DemoBaseTest
     {
         #region Test data
         private string expectedWifiName;

@@ -16,7 +16,7 @@ namespace ClassLibrary1.ChromeTest
         }
 
         [Test]
-        public void Test()
+        public void ChromeTest()
         {
             Page.GooglePage.DoSearsh(textToSearch);
             Page.GooglePage.OpenSearchResultByTitle(websideToOpen);

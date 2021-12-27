@@ -44,6 +44,7 @@ namespace VirtualDevice.Tests
             StopServer();
             if (driver != null)
             {
+                driver.CloseApp();
                 driver.Quit();
             }
         }
