@@ -40,7 +40,6 @@ namespace VirtualDevice
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
-            driver.CloseApp();
             StopServer();
         }
 
