@@ -134,3 +134,6 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+/.vs/VSWorkspaceState.json
+/.vs/VirtualDevice/project-colors.json
+/.vs/slnx.sqlite
