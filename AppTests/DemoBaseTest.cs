@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using ClassLibrary1.Utils;
@@ -19,6 +20,7 @@ namespace VirtualDevice.Tests
         private AndroidDriver<AndroidElement> driver;
         private Page page;
         private Random random;
+        private Stopwatch stopwatchTest, stopwatchClass;
         protected Page Page => page ?? (page = new Page(
                 driver: driver));
 
@@ -28,6 +30,9 @@ namespace VirtualDevice.Tests
             StartServer();
             random = new Random();
             options = new AppiumOptions();
+            stopwatchTest = new Stopwatch();
+            stopwatchClass = new Stopwatch();
+            stopwatchClass.Start();
 
             ConfigureDevice(options);
             options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", $"{BuildConfigurator.Read("DemoApkName")}.apk"));
@@ -41,6 +46,9 @@ namespace VirtualDevice.Tests
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            stopwatchClass.Stop();
+            Console.WriteLine($"Class run time in seconds = {TimeSpan.FromMilliseconds(stopwatchTest.ElapsedMilliseconds).TotalSeconds}");
+            stopwatchClass.Reset();
             StopServer();
             if (driver != null)
             {
@@ -48,9 +56,18 @@ namespace VirtualDevice.Tests
             }
         }
 
+        [SetUp]
+        public void SetUp()
+        {
+            stopwatchTest.Start();
+        }
+
         [TearDown]
         public void TearDown()
         {
+            stopwatchTest.Stop();
+            Console.WriteLine($"Test run time in seconds = {TimeSpan.FromMilliseconds(stopwatchTest.ElapsedMilliseconds).TotalSeconds}");
+            stopwatchTest.Reset();
             TakeScreenShot();
             driver.ResetApp();
         }
