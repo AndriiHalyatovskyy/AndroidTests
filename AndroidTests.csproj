@@ -104,9 +104,6 @@
     <None Include="APK\ApiDemos-debug.apk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="APK\Chrome.apk">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="APK\General-Store.apk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
