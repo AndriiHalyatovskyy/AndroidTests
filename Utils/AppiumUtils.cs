@@ -40,18 +40,20 @@ namespace ClassLibrary1.Utils
         {
            
             var device = TestContext.Parameters.Get("device");
-            if (device.ToLower().Equals("fake"))
+            switch (device.ToLower())
             {
-                options.AddAdditionalCapability(MobileCapabilityType.DeviceName, BuildConfigurator.Read("DeviceName"));
-                options.AddAdditionalCapability("avd", BuildConfigurator.Read("DeviceName").Replace(" ", "_"));
-            }
-            else if (device.ToLower().Equals("real"))
-            {
-                options.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Device");
-            }
-            else
-            {
-                throw new ArgumentException("Unknown device");
+                case "fake":
+                    options.AddAdditionalCapability(MobileCapabilityType.DeviceName, BuildConfigurator.Read("DeviceName"));
+                    options.AddAdditionalCapability("avd", BuildConfigurator.Read("DeviceName").Replace(" ", "_"));
+                    break;
+
+                case "real":
+                    options.AddAdditionalCapability(MobileCapabilityType.DeviceName, "Android Device");
+                    break;
+
+                default:
+                    throw new ArgumentException($"Unknown device {device}");
+
             }
         }
 
