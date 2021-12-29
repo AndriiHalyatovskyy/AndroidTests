@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using ClassLibrary1.Logging;
 using ClassLibrary1.Utils;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -14,7 +15,7 @@ using VirtualDevice.Pages;
 
 namespace VirtualDevice.Tests
 {
-    public abstract class DemoBaseTest : AppiumUtils
+    public abstract class DemoBaseTest : TestUtils
     {
         private AppiumOptions options;
         private AndroidDriver<AndroidElement> driver;
@@ -27,6 +28,7 @@ namespace VirtualDevice.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            SetOutputLogFileName(TestContext.CurrentContext.Test.ClassName);
             StartServer();
             random = new Random();
             options = new AppiumOptions();
@@ -47,7 +49,7 @@ namespace VirtualDevice.Tests
         public void OneTimeTearDown()
         {
             stopwatchClass.Stop();
-            Console.WriteLine($"Class run time in seconds = {TimeSpan.FromMilliseconds(stopwatchClass.ElapsedMilliseconds).TotalSeconds}");
+            Logger.GetLogger.Info($"Class {TestContext.CurrentContext.Test.ClassName} finished in {TimeSpan.FromMilliseconds(stopwatchTest.ElapsedMilliseconds).TotalSeconds}");
             stopwatchClass.Reset();
             StopServer();
             if (driver != null)
@@ -59,6 +61,7 @@ namespace VirtualDevice.Tests
         [SetUp]
         public void SetUp()
         {
+            Logger.GetLogger.Info($"Test {TestContext.CurrentContext.Test.MethodName} started from {TestContext.CurrentContext.Test.ClassName}");
             stopwatchTest.Start();
         }
 
@@ -66,9 +69,9 @@ namespace VirtualDevice.Tests
         public void TearDown()
         {
             stopwatchTest.Stop();
-            Console.WriteLine($"Test run time in seconds = {TimeSpan.FromMilliseconds(stopwatchTest.ElapsedMilliseconds).TotalSeconds}");
+            Logger.GetLogger.Info($"Test {TestContext.CurrentContext.Test.MethodName} finished in {TimeSpan.FromMilliseconds(stopwatchTest.ElapsedMilliseconds).TotalSeconds}");
             stopwatchTest.Reset();
-            TakeScreenShot();
+            EndTest();
             driver.ResetApp();
         }
 
@@ -82,7 +85,7 @@ namespace VirtualDevice.Tests
         /// <summary>
         /// Make a screenshot on test failure
         /// </summary>
-        private void TakeScreenShot()
+        private void EndTest()
         {
             var directory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent;
             var folder = Path.Combine(directory.FullName, "ScreenShots");
@@ -93,6 +96,7 @@ namespace VirtualDevice.Tests
 
             if (TestContext.CurrentContext.Result.Outcome != ResultState.Success)
             {
+                Logger.GetLogger.Error($"Test {TestContext.CurrentContext.Test.MethodName} failed. {TestContext.CurrentContext.Result.Message}");
                 var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
                 screenshot.SaveAsFile(Path.Combine(folder, $"{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("dd.MM.yyyy")}.png"), ScreenshotImageFormat.Png);
             }

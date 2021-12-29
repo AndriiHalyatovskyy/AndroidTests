@@ -1,4 +1,6 @@
 ﻿using System;
+using log4net.Appender;
+using log4net.Core;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Enums;
@@ -7,7 +9,7 @@ using VirtualDevice.Configuration;
 
 namespace ClassLibrary1.Utils
 {
-    public abstract class AppiumUtils
+    public abstract class TestUtils
     {
         private AppiumLocalService service;
         /// <summary>
@@ -57,9 +59,13 @@ namespace ClassLibrary1.Utils
             }
         }
 
-        private void IsServerRunning(int port)
+        private protected void SetOutputLogFileName(string fileName)
         {
-            //IPEndPoint socket = new IPEndPoint(port);
+            foreach (FileAppender appender in LoggerManager.GetAllRepositories()[0].GetAppenders())
+            {
+                appender.File = $"Logs\\{fileName}_{DateTime.Now:dd.MM.YYYY}.log";
+                appender.ActivateOptions();
+            }
         }
 
     }
