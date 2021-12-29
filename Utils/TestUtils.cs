@@ -69,7 +69,7 @@ namespace ClassLibrary1.Utils
             var q = LoggerManager.GetAllRepositories()[0].GetAppenders();
             foreach (FileAppender appender in LoggerManager.GetAllRepositories()[0].GetAppenders())
             {
-                appender.File = $"Logs\\{fileName}_{DateTime.Now:dd.MM.YYYY}.log";
+                appender.File = $"Logs\\{fileName}_{DateTime.Now:dd.MM.yyy}.log";
                 appender.ActivateOptions();
             }
         }
