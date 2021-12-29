@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using ClassLibrary1.Utils;
 using NUnit.Framework;
@@ -18,6 +19,7 @@ namespace VirtualDevice
         private AndroidDriver<AndroidElement> driver;
         private AppiumOptions options;
         private Page page;
+        private Stopwatch stopwatchTest, stopwatchClass;
 
         protected Page Page => page ?? (page = new Page(
                 driver: driver));
@@ -25,6 +27,9 @@ namespace VirtualDevice
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            stopwatchTest = new Stopwatch();
+            stopwatchClass = new Stopwatch();
+            stopwatchClass.Start();
             StartServer();
             options = new AppiumOptions();
 
@@ -40,12 +45,24 @@ namespace VirtualDevice
         [OneTimeTearDown]
         public void OneTimeTearDown()
         {
+            stopwatchClass.Stop();
+            Console.WriteLine($"Class run time in seconds = {TimeSpan.FromMilliseconds(stopwatchClass.ElapsedMilliseconds).TotalSeconds}");
+            stopwatchClass.Reset();
             StopServer();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            stopwatchTest.Start();
         }
 
         [TearDown]
         public void TearDown()
         {
+            stopwatchTest.Stop();
+            Console.WriteLine($"Test run time in seconds = {TimeSpan.FromMilliseconds(stopwatchTest.ElapsedMilliseconds).TotalSeconds}");
+            stopwatchTest.Reset();
             TakeScreenShot();
         }
 
