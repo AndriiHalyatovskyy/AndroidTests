@@ -49,7 +49,7 @@ namespace VirtualDevice.Tests
         public void OneTimeTearDown()
         {
             stopwatchClass.Stop();
-            Console.WriteLine($"Class run time in seconds = {TimeSpan.FromMilliseconds(stopwatchTest.ElapsedMilliseconds).TotalSeconds}");
+            Console.WriteLine($"Class run time in seconds = {TimeSpan.FromMilliseconds(stopwatchClass.ElapsedMilliseconds).TotalSeconds}");
             stopwatchClass.Reset();
             StopServer();
             if (driver != null)
