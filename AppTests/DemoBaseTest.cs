@@ -28,6 +28,7 @@ namespace VirtualDevice.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            InitLogger();
             SetOutputLogFileName(TestContext.CurrentContext.Test.ClassName);
             StartServer();
             random = new Random();

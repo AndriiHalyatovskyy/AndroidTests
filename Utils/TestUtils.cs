@@ -1,5 +1,6 @@
 ﻿using System;
 using log4net.Appender;
+using log4net.Config;
 using log4net.Core;
 using NUnit.Framework;
 using OpenQA.Selenium.Appium;
@@ -59,13 +60,26 @@ namespace ClassLibrary1.Utils
             }
         }
 
+        /// <summary>
+        /// Set name to output log file
+        /// </summary>
+        /// <param name="fileName">Name of file</param>
         private protected void SetOutputLogFileName(string fileName)
         {
+            var q = LoggerManager.GetAllRepositories()[0].GetAppenders();
             foreach (FileAppender appender in LoggerManager.GetAllRepositories()[0].GetAppenders())
             {
                 appender.File = $"Logs\\{fileName}_{DateTime.Now:dd.MM.YYYY}.log";
                 appender.ActivateOptions();
             }
+        }
+
+        /// <summary>
+        /// Initialized logger settings
+        /// </summary>
+        private protected void InitLogger()
+        {
+            XmlConfigurator.Configure();
         }
 
     }

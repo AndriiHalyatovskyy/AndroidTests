@@ -28,6 +28,7 @@ namespace VirtualDevice
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            InitLogger();
             SetOutputLogFileName(TestContext.CurrentContext.Test.ClassName);
             stopwatchTest = new Stopwatch();
             stopwatchClass = new Stopwatch();
