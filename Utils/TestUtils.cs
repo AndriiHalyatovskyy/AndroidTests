@@ -42,7 +42,11 @@ namespace ClassLibrary1.Utils
         private protected void ConfigureDevice(AppiumOptions options)
         {
            
-            var device = TestContext.Parameters.Get("device");
+            var device = TestContext.Parameters?.Get("device");
+            if (string.IsNullOrEmpty(device))
+            {
+                device = "fake";
+            }
             switch (device.ToLower())
             {
                 case "fake":
