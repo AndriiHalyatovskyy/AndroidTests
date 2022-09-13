@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VirtualDevice.Pages
+﻿namespace VirtualDevice.Pages
 {
     public abstract class APage<T>
     {
