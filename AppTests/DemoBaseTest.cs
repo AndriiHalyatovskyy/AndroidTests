@@ -9,7 +9,6 @@ using NUnit.Framework.Interfaces;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
-using OpenQA.Selenium.Appium.Enums;
 using VirtualDevice.Configuration;
 using VirtualDevice.Pages;
 
@@ -29,7 +28,7 @@ namespace VirtualDevice.Tests
         public void OneTimeSetUp()
         {
             InitLogger();
-            SetOutputLogFileName(TestContext.CurrentContext.Test.ClassName);
+            SetOutputLogFileName($"{DateTime.UtcNow:dd.MM.yyyy}_{TestContext.CurrentContext.Test.ClassName}");
             StartServer();
             random = new Random();
             options = new AppiumOptions();
@@ -38,9 +37,6 @@ namespace VirtualDevice.Tests
             stopwatchClass.Start();
 
             ConfigureDevice(options);
-            options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", $"{BuildConfigurator.Read("DemoApkName")}.apk"));
-            options.AddAdditionalCapability(MobileCapabilityType.AutomationName, "uiautomator2");
-            options.AddAdditionalCapability("chromedriverExecutable", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "chromedriver.exe"));
 
             driver = new AndroidDriver<AndroidElement>(new Uri(BuildConfigurator.Read("Url")), options);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
@@ -50,7 +46,7 @@ namespace VirtualDevice.Tests
         public void OneTimeTearDown()
         {
             stopwatchClass.Stop();
-            Logger.GetLogger.Info($"Class {TestContext.CurrentContext.Test.ClassName} finished in {TimeSpan.FromMilliseconds(stopwatchTest.ElapsedMilliseconds).TotalSeconds}");
+            Logger.GetLogger.Info($"Class {TestContext.CurrentContext.Test.ClassName} finished in {TimeSpan.FromMilliseconds(stopwatchClass.ElapsedMilliseconds).TotalSeconds} seconds");
             stopwatchClass.Reset();
             StopServer();
             if (driver != null)
@@ -97,7 +93,7 @@ namespace VirtualDevice.Tests
 
             if (TestContext.CurrentContext.Result.Outcome != ResultState.Success)
             {
-                Logger.GetLogger.Error($"Test {TestContext.CurrentContext.Test.MethodName} failed. {TestContext.CurrentContext.Result.Message}");
+                Logger.GetLogger.Error($"Test {TestContext.CurrentContext.Test.MethodName} failed. With message: {TestContext.CurrentContext.Result.Message}");
                 var screenshot = ((ITakesScreenshot)driver).GetScreenshot();
                 screenshot.SaveAsFile(Path.Combine(folder, $"{TestContext.CurrentContext.Test.Name}_{DateTime.Now.ToString("dd.MM.yyyy")}.png"), ScreenshotImageFormat.Png);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using log4net.Appender;
 using log4net.Config;
 using log4net.Core;
@@ -41,7 +42,7 @@ namespace ClassLibrary1.Utils
         /// </summary>
         private protected void ConfigureDevice(AppiumOptions options)
         {
-           
+
             var device = TestContext.Parameters?.Get("device");
             if (string.IsNullOrEmpty(device))
             {
@@ -62,6 +63,24 @@ namespace ClassLibrary1.Utils
                     throw new ArgumentException($"Unknown device {device}");
 
             }
+
+            options.AddAdditionalCapability(MobileCapabilityType.App, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "APK", $"{BuildConfigurator.Read("DemoApkName")}.apk"));
+            options.AddAdditionalCapability(MobileCapabilityType.AutomationName, "uiautomator2");
+            options.AddAdditionalCapability("chromedriverExecutable", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "chromedriver.exe"));
+        }
+
+        /// <summary>
+        /// Checks if output folder exist, and create it if not
+        /// </summary>
+        /// <param name="folderPath">Path to the folder</param>
+        private void CheckLogFolder(string folderPath)
+        {
+            var fullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, folderPath);
+
+            if (!Directory.Exists(fullPath))
+            {
+                Directory.CreateDirectory(fullPath);
+            }
         }
 
         /// <summary>
@@ -70,10 +89,12 @@ namespace ClassLibrary1.Utils
         /// <param name="fileName">Name of file</param>
         private protected void SetOutputLogFileName(string fileName)
         {
-            var q = LoggerManager.GetAllRepositories()[0].GetAppenders();
+            var folderPath = $"Logs\\{DateTime.Now:dd.MM.yyyy}\\";
+            CheckLogFolder(folderPath);
+
             foreach (FileAppender appender in LoggerManager.GetAllRepositories()[0].GetAppenders())
             {
-                appender.File = $"Logs\\{DateTime.Now:dd.MM.yyyy}\\{fileName}_{DateTime.Now:dd.MM.yyy}.log";
+                appender.File = $"{folderPath}{fileName}.log";
                 appender.ActivateOptions();
             }
         }
