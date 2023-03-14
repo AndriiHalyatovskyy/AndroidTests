@@ -27,6 +27,7 @@ namespace VirtualDevice.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            //Test
             InitLogger();
             SetOutputLogFileName($"{DateTime.UtcNow:dd.MM.yyyy}_{TestContext.CurrentContext.Test.ClassName}");
             StartServer();
